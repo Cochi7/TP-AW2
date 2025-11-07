@@ -1,0 +1,78 @@
+[
+  {
+    "id": 1,
+    "name": "Lucas Pérez",
+    "email": "lucas.perez@gmail.com",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "name": "María López",
+    "email": "maria.lopez@yahoo.com",
+    "role": "customer"
+  },
+  {
+    "id": 3,
+    "name": "Sofía Díaz",
+    "email": "sofia.diaz@gmail.com",
+    "role": "customer"
+  },
+  {
+    "id": 4,
+    "name": "Carlos Gómez",
+    "email": "carlos.gomez@hotmail.com",
+    "role": "employee"
+  },
+  {
+    "id": 5,
+    "name": "Fernanda Torres",
+    "email": "fernanda.torres@gmail.com",
+    "role": "customer"
+  },
+  {
+    "id": 6,
+    "name": "Juan Castillo",
+    "email": "juan.castillo@gmail.com",
+    "role": "employee"
+  },
+  {
+    "id": 7,
+    "name": "Valentina Ruiz",
+    "email": "valentina.ruiz@gmail.com",
+    "role": "customer"
+  },
+  {
+    "id": 8,
+    "name": "Mateo Silva",
+    "email": "mateo.silva@gmail.com",
+    "role": "customer"
+  },
+  {
+    "id": 9,
+    "name": "Camila Romero",
+    "email": "camila.romero@gmail.com",
+    "role": "customer"
+  },
+  {
+    "id": 10,
+    "name": "Diego Fernández",
+    "email": "diego.fernandez@gmail.com",
+    "role": "admin"
+  },
+  {
+    "id": 11,
+    "name": "Juan Pérez",
+    "email": "juan.perez@gmail.com",
+    "phone": "+54 351 123 4567",
+    "address": "Av. Colón 1234, Córdoba",
+    "role": "customer"
+  },
+  {
+    "id": 12,
+    "name": "Pablo Gomez",
+    "email": "pablog@gmail.com",
+    "phone": "+54 351 123 0123",
+    "address": "Av. Vélez Sarsfield 1236",
+    "role": "customer"
+  }
+]

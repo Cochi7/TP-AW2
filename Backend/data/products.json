@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "name": "Smartphone Samsung Galaxy A55",
+    "category": "Celulares",
+    "price": 420000,
+    "stock": 24,
+    "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400"
+  },
+  {
+    "id": 2,
+    "name": "Notebook Lenovo IdeaPad 3",
+    "category": "Computadoras",
+    "price": 680000,
+    "stock": 13,
+    "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400"
+  },
+  {
+    "id": 3,
+    "name": "Auriculares Bluetooth JBL Tune 510BT",
+    "category": "Audio",
+    "price": 450000,
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"
+  },
+  {
+    "id": 4,
+    "name": "Smart TV LG 50'' 4K",
+    "category": "Televisores",
+    "price": 750000,
+    "stock": 10,
+    "image": "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400"
+  },
+  {
+    "id": 5,
+    "name": "Tablet Samsung Galaxy Tab A9",
+    "category": "Tablets",
+    "price": 320000,
+    "stock": 20,
+    "image": "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400"
+  },
+  {
+    "id": 6,
+    "name": "Monitor Apple 24'' Full HD",
+    "category": "Monitores",
+    "price": 210000,
+    "stock": 18,
+    "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400"
+  },
+  {
+    "id": 7,
+    "name": "Mouse Logitech M170 Inalámbrico",
+    "category": "Periféricos",
+    "price": 15000,
+    "stock": 60,
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400"
+  },
+  {
+    "id": 8,
+    "name": "Teclado Inalámbrico Redragon",
+    "category": "Periféricos",
+    "price": 38000,
+    "stock": 35,
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400"
+  },
+  {
+    "id": 9,
+    "name": "Consola PlayStation 5",
+    "category": "Consolas",
+    "price": 980000,
+    "stock": 8,
+    "image": "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400"
+  },
+  {
+    "id": 10,
+    "name": "Cámara Canon Hero 12 Black",
+    "category": "Cámaras",
+    "price": 450000,
+    "stock": 12,
+    "image": "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
+  },
+  {
+    "id": 11,
+    "name": "iPhone 15 Pro Max",
+    "category": "Celulares",
+    "price": 1200000,
+    "stock": 8,
+    "image": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400"
+  },
+  {
+    "id": 12,
+    "name": "MacBook Pro 14'' M3",
+    "category": "Computadoras",
+    "price": 1850000,
+    "stock": 5,
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400"
+  },
+  {
+    "id": 13,
+    "name": "Parlante JBL Charge 5",
+    "category": "Audio",
+    "price": 85000,
+    "stock": 27,
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400"
+  },
+  {
+    "id": 14,
+    "name": "Smart TV Samsung 65'' QLED",
+    "category": "Televisores",
+    "price": 1200000,
+    "stock": 6,
+    "image": "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=400"
+  },
+  {
+    "id": 15,
+    "name": "iPad Air 11''",
+    "category": "Tablets",
+    "price": 650000,
+    "stock": 12,
+    "image": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400"
+  },
+  {
+    "id": 16,
+    "name": "Monitor LG UltraWide 34''",
+    "category": "Monitores",
+    "price": 450000,
+    "stock": 10,
+    "image": "https://images.unsplash.com/photo-1585792180666-f7347c490ee2?w=400"
+  },
+  {
+    "id": 17,
+    "name": "Monitor Logitech 27''",
+    "category": "Monitores",
+    "price": 320000,
+    "stock": 25,
+    "image": "https://images.unsplash.com/photo-1614624532983-4ce03382d63d?w=400"
+  },
+  {
+    "id": 18,
+    "name": "Micrófono HyperX QuadCast",
+    "category": "Periféricos",
+    "price": 120000,
+    "stock": 15,
+    "image": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=400"
+  },
+  {
+    "id": 19,
+    "name": "Nintendo Switch OLED",
+    "category": "Consolas",
+    "price": 420000,
+    "stock": 14,
+    "image": "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=400"
+  },
+  {
+    "id": 20,
+    "name": "Cámara Sony EOS R50",
+    "category": "Cámaras",
+    "price": 850000,
+    "stock": 7,
+    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400"
+  }
+]

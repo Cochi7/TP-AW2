@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "userId": 2,
+    "productId": 1,
+    "quantity": 1,
+    "total": 420000,
+    "date": "2025-10-01"
+  },
+  {
+    "id": 2,
+    "userId": 3,
+    "productId": 3,
+    "quantity": 2,
+    "total": 104000,
+    "date": "2025-10-02"
+  },
+  {
+    "id": 3,
+    "userId": 5,
+    "productId": 2,
+    "quantity": 1,
+    "total": 680000,
+    "date": "2025-10-02"
+  },
+  {
+    "id": 4,
+    "userId": 7,
+    "productId": 7,
+    "quantity": 3,
+    "total": 45000,
+    "date": "2025-10-03"
+  },
+  {
+    "id": 5,
+    "userId": 8,
+    "productId": 4,
+    "quantity": 1,
+    "total": 750000,
+    "date": "2025-10-04"
+  },
+  {
+    "id": 6,
+    "userId": 4,
+    "productId": 8,
+    "quantity": 2,
+    "total": 76000,
+    "date": "2025-10-05"
+  },
+  {
+    "id": 7,
+    "userId": 9,
+    "productId": 9,
+    "quantity": 1,
+    "total": 980000,
+    "date": "2025-10-06"
+  },
+  {
+    "id": 8,
+    "userId": 2,
+    "productId": 10,
+    "quantity": 1,
+    "total": 450000,
+    "date": "2025-10-06"
+  },
+  {
+    "id": 9,
+    "userId": 10,
+    "productId": 5,
+    "quantity": 2,
+    "total": 640000,
+    "date": "2025-10-07"
+  },
+  {
+    "id": 10,
+    "userId": 6,
+    "productId": 6,
+    "quantity": 1,
+    "total": 210000,
+    "date": "2025-10-07"
+  },
+  {
+    "id": 11,
+    "userId": 1,
+    "productId": 3,
+    "quantity": 2,
+    "total": 104000,
+    "date": "2025-10-08T20:04:21.617Z"
+  },
+  {
+    "id": 12,
+    "userId": 11,
+    "productId": 2,
+    "quantity": 1,
+    "total": 680000,
+    "date": "2025-11-07T22:36:36.177Z"
+  },
+  {
+    "id": 13,
+    "userId": 11,
+    "productId": 1,
+    "quantity": 1,
+    "total": 420000,
+    "date": "2025-11-07T22:38:01.455Z"
+  },
+  {
+    "id": 14,
+    "userId": 11,
+    "productId": 2,
+    "quantity": 1,
+    "total": 680000,
+    "date": "2025-11-07T22:38:01.455Z"
+  },
+  {
+    "id": 15,
+    "userId": 12,
+    "productId": 13,
+    "quantity": 3,
+    "total": 255000,
+    "date": "2025-11-07T22:39:49.898Z"
+  }
+]
