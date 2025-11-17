@@ -1,8 +1,56 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { ShoppingCart, Filter, X, Plus, Minus, Check, Loader, AlertCircle } from 'lucide-react';
+import { ShoppingCart, Filter, X, Plus, Minus, Check, Loader, AlertCircle, User, LogOut, Package } from 'lucide-react';
 
 const API_URL = 'http://localhost:5555';
 
+// Context para autenticación
+const AuthContext = createContext();
+
+const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error('useAuth must be used within AuthProvider');
+  return context;
+};
+
+function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const savedToken = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    
+    if (savedToken && savedUser) {
+      setToken(savedToken);
+      setUser(JSON.parse(savedUser));
+    }
+    setLoading(false);
+  }, []);
+
+  const login = (userData, userToken) => {
+    setUser(userData);
+    setToken(userToken);
+    localStorage.setItem('token', userToken);
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('cart');
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, token, login, logout, loading, isAuthenticated: !!token }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+// Context para el carrito
 const CartContext = createContext();
 
 const useCart = () => {
@@ -84,6 +132,203 @@ function CartProvider({ children }) {
     }}>
       {children}
     </CartContext.Provider>
+  );
+}
+
+// Componente de Login/Register
+function AuthModal({ isOpen, onClose, mode: initialMode }) {
+  const [mode, setMode] = useState(initialMode || 'login');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    address: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const { login } = useAuth();
+
+  useEffect(() => {
+    if (isOpen) {
+      setMode(initialMode || 'login');
+      setError('');
+      setFormData({
+        name: '',
+        email: '',
+        password: '',
+        phone: '',
+        address: ''
+      });
+    }
+  }, [isOpen, initialMode]);
+
+  if (!isOpen) return null;
+
+  const handleSubmit = async () => {
+    setError('');
+    setLoading(true);
+
+    try {
+      const endpoint = mode === 'login' ? '/auth/login' : '/auth/register';
+      const body = mode === 'login' 
+        ? { email: formData.email, password: formData.password }
+        : formData;
+
+      const response = await fetch(API_URL + endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error en la operación');
+      }
+
+      login(data.user, data.token);
+      onClose();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50" onClick={onClose} />
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 w-full max-w-md z-50 max-h-screen overflow-y-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">
+            {mode === 'login' ? 'Iniciar Sesión' : 'Registrarse'}
+          </h2>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+            <X size={24} />
+          </button>
+        </div>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+            <AlertCircle size={20} className="text-red-500 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-red-700">{error}</p>
+          </div>
+        )}
+
+        <div className="space-y-4">
+          {mode === 'register' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Nombre Completo
+              </label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Juan Pérez"
+              />
+            </div>
+          )}
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="tu@email.com"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="••••••••"
+            />
+          </div>
+
+          {mode === 'register' && (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Teléfono (opcional)
+                </label>
+                <input
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="+54 351 123 4567"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Dirección (opcional)
+                </label>
+                <textarea
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  rows="2"
+                  placeholder="Calle 123, Ciudad"
+                />
+              </div>
+            </>
+          )}
+
+          <button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors disabled:bg-gray-400 flex items-center justify-center gap-2"
+          >
+            {loading ? (
+              <>
+                <Loader className="animate-spin" size={20} />
+                Procesando...
+              </>
+            ) : (
+              mode === 'login' ? 'Iniciar Sesión' : 'Registrarse'
+            )}
+          </button>
+
+          <div className="text-center text-sm text-gray-600">
+            {mode === 'login' ? (
+              <>
+                ¿No tienes cuenta?{' '}
+                <button
+                  onClick={() => setMode('register')}
+                  className="text-blue-500 hover:text-blue-600 font-semibold"
+                >
+                  Regístrate
+                </button>
+              </>
+            ) : (
+              <>
+                ¿Ya tienes cuenta?{' '}
+                <button
+                  onClick={() => setMode('login')}
+                  className="text-blue-500 hover:text-blue-600 font-semibold"
+                >
+                  Inicia sesión
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -172,8 +417,18 @@ function ProductCard({ product }) {
 }
 
 function CartSidebar({ isOpen, onClose }) {
-  const { cart, updateQuantity, removeFromCart, total, clearCart } = useCart();
+  const { cart, updateQuantity, removeFromCart, total } = useCart();
+  const { isAuthenticated } = useAuth();
   const [showCheckout, setShowCheckout] = useState(false);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+
+  const handleCheckout = () => {
+    if (!isAuthenticated) {
+      setShowAuthPrompt(true);
+      return;
+    }
+    setShowCheckout(true);
+  };
 
   if (!isOpen) return null;
 
@@ -255,7 +510,7 @@ function CartSidebar({ isOpen, onClose }) {
                 <span className="text-blue-600">${total.toLocaleString('es-AR')}</span>
               </div>
               <button
-                onClick={() => setShowCheckout(true)}
+                onClick={handleCheckout}
                 className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"
               >
                 Proceder al Pago
@@ -265,46 +520,44 @@ function CartSidebar({ isOpen, onClose }) {
         )}
       </div>
 
+      {showAuthPrompt && (
+        <AuthModal
+          isOpen={showAuthPrompt}
+          onClose={() => setShowAuthPrompt(false)}
+          mode="login"
+        />
+      )}
+
       {showCheckout && (
         <CheckoutModal
           onClose={() => setShowCheckout(false)}
           cart={cart}
           total={total}
-          clearCart={clearCart}
         />
       )}
     </>
   );
 }
 
-function CheckoutModal({ onClose, cart, total, clearCart }) {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: ''
-  });
+function CheckoutModal({ onClose, cart, total }) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const { token, user } = useAuth();
+  const { clearCart } = useCart();
 
   const handleSubmit = async () => {
-    if (!formData.name || !formData.email || !formData.phone || !formData.address) {
-      setError('Por favor complete todos los campos');
-      return;
-    }
-    
     setLoading(true);
     setError('');
 
     try {
       const response = await fetch(API_URL + '/orders', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          user: formData,
-          items: cart
-        })
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ items: cart })
       });
 
       const data = await response.json();
@@ -340,7 +593,7 @@ function CheckoutModal({ onClose, cart, total, clearCart }) {
         ) : (
           <>
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-gray-800">Finalizar Compra</h3>
+              <h3 className="text-2xl font-bold text-gray-800">Confirmar Compra</h3>
               <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
                 <X size={24} />
               </button>
@@ -353,79 +606,34 @@ function CheckoutModal({ onClose, cart, total, clearCart }) {
               </div>
             )}
 
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Nombre Completo
-                </label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Juan Pérez"
-                />
-              </div>
+            <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-gray-700">
+                <strong>Usuario:</strong> {user?.name}
+              </p>
+              <p className="text-sm text-gray-700">
+                <strong>Email:</strong> {user?.email}
+              </p>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="juan@example.com"
-                />
+            <div className="border-t pt-4">
+              <div className="flex justify-between text-lg font-bold mb-4">
+                <span>Total a pagar:</span>
+                <span className="text-blue-600">${total.toLocaleString('es-AR')}</span>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Teléfono
-                </label>
-                <input
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="+54 351 123 4567"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Dirección
-                </label>
-                <textarea
-                  value={formData.address}
-                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  rows="3"
-                  placeholder="Calle, número, ciudad, provincia"
-                />
-              </div>
-
-              <div className="border-t pt-4 mt-4">
-                <div className="flex justify-between text-lg font-bold mb-4">
-                  <span>Total a pagar:</span>
-                  <span className="text-blue-600">${total.toLocaleString('es-AR')}</span>
-                </div>
-                <button
-                  onClick={handleSubmit}
-                  disabled={loading}
-                  className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors disabled:bg-gray-400 flex items-center justify-center gap-2"
-                >
-                  {loading ? (
-                    <>
-                      <Loader className="animate-spin" size={20} />
-                      Procesando...
-                    </>
-                  ) : (
-                    'Confirmar Compra'
-                  )}
-                </button>
-              </div>
+              <button
+                onClick={handleSubmit}
+                disabled={loading}
+                className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors disabled:bg-gray-400 flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <Loader className="animate-spin" size={20} />
+                    Procesando...
+                  </>
+                ) : (
+                  'Confirmar Compra'
+                )}
+              </button>
             </div>
           </>
         )}
@@ -442,7 +650,10 @@ function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
   const { itemCount } = useCart();
+  const { user, logout, isAuthenticated } = useAuth();
 
   useEffect(() => {
     loadProducts();
@@ -485,26 +696,66 @@ function App() {
     ? products
     : products.filter(p => p.category === selectedCategory);
 
+  const openAuthModal = (mode) => {
+    setAuthMode(mode);
+    setAuthModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow-md sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-blue-600">TechStore</h1>
-            <p className="text-xs text-gray-500">Tecnología de confianza</p>
+            <p className="text-xs text-gray-500">Tu tienda de tecnología</p>
           </div>
-          <button
-            onClick={() => setCartOpen(true)}
-            className="relative bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
-          >
-            <ShoppingCart size={20} />
-            <span className="font-semibold">Carrito</span>
-            {itemCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
-                {itemCount}
-              </span>
+          
+          <div className="flex items-center gap-4">
+            {isAuthenticated ? (
+              <div className="flex items-center gap-3">
+                <div className="text-right">
+                  <p className="text-sm font-semibold text-gray-700">{user?.name}</p>
+                  <p className="text-xs text-gray-500">{user?.email}</p>
+                </div>
+                <button
+                  onClick={logout}
+                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2"
+                >
+                  <LogOut size={18} />
+                  Salir
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => openAuthModal('login')}
+                  className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-2"
+                >
+                  <User size={18} />
+                  Iniciar Sesión
+                </button>
+                <button
+                  onClick={() => openAuthModal('register')}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                >
+                  Registrarse
+                </button>
+              </div>
             )}
-          </button>
+            
+            <button
+              onClick={() => setCartOpen(true)}
+              className="relative bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
+            >
+              <ShoppingCart size={20} />
+              <span className="font-semibold">Carrito</span>
+              {itemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -515,7 +766,7 @@ function App() {
             <div>
               <p className="text-red-700 font-medium">{error}</p>
               <p className="text-sm text-red-600 mt-1">
-                Ejecutar npm run dev en el backend
+                Asegúrate de ejecutar npm run dev en tu backend
               </p>
               <button
                 onClick={loadProducts}
@@ -599,14 +850,17 @@ function App() {
       </div>
 
       <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} mode={authMode} />
     </div>
   );
 }
 
 export default function AppWrapper() {
   return (
-    <CartProvider>
-      <App />
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <App />
+      </CartProvider>
+    </AuthProvider>
   );
 }

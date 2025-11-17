@@ -3,66 +3,77 @@
     "id": 1,
     "name": "Lucas Pérez",
     "email": "lucas.perez@gmail.com",
+    "password": "$2b$10$4IAPAQBAQ2qVyhf7UNGAWuEHR09QTerDYUvhnGWGq3EPrJlmAe6Ya",
     "role": "admin"
   },
   {
     "id": 2,
     "name": "María López",
     "email": "maria.lopez@yahoo.com",
+    "password": "$2b$10$xy1lqRpMwBA5b5h9o1orueeYyDaYX0clemYmuyXjIFSsriggWvT/2",
     "role": "customer"
   },
   {
     "id": 3,
     "name": "Sofía Díaz",
     "email": "sofia.diaz@gmail.com",
+    "password": "$2b$10$I3FXIVF1Mkf3XhqP.wtMBedvdYfMbz79n6GpJfY7/BNjjJCujfK1m",
     "role": "customer"
   },
   {
     "id": 4,
     "name": "Carlos Gómez",
     "email": "carlos.gomez@hotmail.com",
+    "password": "$2b$10$4IAPAQBAQ2qVyhf7UNGAWuEHR09QTerDYUvhnGWGq3EPrJlmAe6Ya",
     "role": "employee"
   },
   {
     "id": 5,
     "name": "Fernanda Torres",
     "email": "fernanda.torres@gmail.com",
+    "password": "$2b$10$xy1lqRpMwBA5b5h9o1orueeYyDaYX0clemYmuyXjIFSsriggWvT/2",
     "role": "customer"
   },
   {
     "id": 6,
     "name": "Juan Castillo",
     "email": "juan.castillo@gmail.com",
+    "password": "$2b$10$I3FXIVF1Mkf3XhqP.wtMBedvdYfMbz79n6GpJfY7/BNjjJCujfK1m",
     "role": "employee"
   },
   {
     "id": 7,
     "name": "Valentina Ruiz",
     "email": "valentina.ruiz@gmail.com",
+    "password": "$2b$10$4IAPAQBAQ2qVyhf7UNGAWuEHR09QTerDYUvhnGWGq3EPrJlmAe6Ya",
     "role": "customer"
   },
   {
     "id": 8,
     "name": "Mateo Silva",
     "email": "mateo.silva@gmail.com",
+    "password": "$2b$10$xy1lqRpMwBA5b5h9o1orueeYyDaYX0clemYmuyXjIFSsriggWvT/2",
     "role": "customer"
   },
   {
     "id": 9,
     "name": "Camila Romero",
     "email": "camila.romero@gmail.com",
+    "password": "$2b$10$I3FXIVF1Mkf3XhqP.wtMBedvdYfMbz79n6GpJfY7/BNjjJCujfK1m",
     "role": "customer"
   },
   {
     "id": 10,
     "name": "Diego Fernández",
     "email": "diego.fernandez@gmail.com",
+    "password": "$2b$10$4IAPAQBAQ2qVyhf7UNGAWuEHR09QTerDYUvhnGWGq3EPrJlmAe6Ya",
     "role": "admin"
   },
   {
     "id": 11,
     "name": "Juan Pérez",
     "email": "juan.perez@gmail.com",
+    "password": "$2b$10$xy1lqRpMwBA5b5h9o1orueeYyDaYX0clemYmuyXjIFSsriggWvT/2",
     "phone": "+54 351 123 4567",
     "address": "Av. Colón 1234, Córdoba",
     "role": "customer"
@@ -71,8 +82,18 @@
     "id": 12,
     "name": "Pablo Gomez",
     "email": "pablog@gmail.com",
+    "password": "$2b$10$I3FXIVF1Mkf3XhqP.wtMBedvdYfMbz79n6GpJfY7/BNjjJCujfK1m",
     "phone": "+54 351 123 0123",
     "address": "Av. Vélez Sarsfield 1236",
+    "role": "customer"
+  },
+  {
+    "id": 13,
+    "name": "Rodrigo Funes",
+    "email": "rodrigo90@gmail.com",
+    "password": "$2b$10$7jLzgvvlVSCXs8714vmYx.a8JU64qi1GbEU6JjSNrKQN/iTwSPFWa",
+    "phone": "",
+    "address": "",
     "role": "customer"
   }
 ]
