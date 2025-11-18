@@ -707,9 +707,9 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-blue-600">TechStore</h1>
-            <p className="text-xs text-gray-500">Tu tienda de tecnología</p>
+            <p className="text-xs text-gray-500">Tecnología de confianza</p>
           </div>
-          
+
           <div className="flex items-center gap-4">
             {isAuthenticated ? (
               <div className="flex items-center gap-3">
